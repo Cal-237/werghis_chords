@@ -5,7 +5,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { CircularProgress, IconButton, Box, Link } from "@mui/material";
+import { CircularProgress, IconButton, Box, Link, Tooltip } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
@@ -59,24 +59,28 @@ export default function SongsTable({ songs }) {
               </TableCell>
 
               <TableCell sx={{minWidth: 60}}>
-                <IconButton
-                  onClick={() => {
-                    navigate(`/edit/${song.id}`);
-                  }}
-                  size="small"
-                  aria-label="edit"
-                >
-                  <Edit fontSize="inherit"></Edit>
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    deleteSong(song.id, song.title);
-                  }}
-                  size="small"
-                  aria-label="delete"
-                >
-                  <Delete fontSize="inherit"></Delete>
-                </IconButton>
+                <Tooltip title="Edit" disableInteractive>
+                  <IconButton
+                    onClick={() => {
+                      navigate(`/edit/${song.id}`);
+                    }}
+                    size="small"
+                    aria-label="edit"
+                  >
+                    <Edit fontSize="inherit"></Edit>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Delete" disableInteractive>
+                  <IconButton
+                    onClick={() => {
+                      deleteSong(song.id, song.title);
+                    }}
+                    size="small"
+                    aria-label="delete"
+                  >
+                    <Delete fontSize="inherit"></Delete>
+                  </IconButton>
+                </Tooltip>
               </TableCell>
 
               <TableCell align="right">{song.date}</TableCell>

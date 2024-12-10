@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { notesFlat, notesSharp } from "../scripts/keys";
-import { Box, Typography, CircularProgress, IconButton } from "@mui/material";
+import { Box, Typography, CircularProgress, IconButton, Tooltip } from "@mui/material";
 import { Edit, Print } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import Chord from "../components/Chord";
@@ -89,22 +89,26 @@ export default function SongView() {
                     {//@ts-ignore
                     songData.title}
                 </Typography>
-                <IconButton
-                  onClick={() => {
-                    navigate(`/edit/${id}`)
-                  }}
-                  size='small' 
-                  aria-label='edit'>
-                  <Edit fontSize='inherit'></Edit>
-                </IconButton>
-                <IconButton
-                  onClick={() => {
-                    window.print();
-                  }}
-                  size='small' 
-                  aria-label='edit'>
-                  <Print fontSize='inherit'></Print>
-                </IconButton>
+                <Tooltip title="Edit">
+                    <IconButton
+                      onClick={() => {
+                        navigate(`/edit/${id}`)
+                      }}
+                      size='small'
+                      aria-label='edit'>
+                      <Edit fontSize='inherit'></Edit>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Print">
+                    <IconButton
+                      onClick={() => {
+                        window.print();
+                      }}
+                      size='small'
+                      aria-label='edit'>
+                      <Print fontSize='inherit'></Print>
+                    </IconButton>
+                </Tooltip>
                 </Box>
 
                 <ViewControls params={params} handleChange={handleParamsChange}></ViewControls>

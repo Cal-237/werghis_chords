@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import SongsTable from "../components/SongsTable";
 import { query, collection, orderBy, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { Fab } from "@mui/material";
+import { Fab, Tooltip } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom";
 
@@ -49,15 +49,17 @@ export default function Homepage() {
     return (
         <>
           <SongsTable songs={songs} />
-          <Fab sx={{position: "fixed", right: 30, bottom: 30}} 
-            color="primary" 
-            aria-label="new"
-            onClick={() => {
-              navigate("/newSong");
-            }}
-          >
-            <AddIcon />
-          </Fab>
+          <Tooltip title="New Song">
+            <Fab sx={{position: "fixed", right: 30, bottom: 30}}
+              color="primary"
+              aria-label="new"
+              onClick={() => {
+                navigate("/newSong");
+              }}
+            >
+              <AddIcon />
+            </Fab>
+          </Tooltip>
         </>
       );
 }
