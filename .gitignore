@@ -30,3 +30,6 @@ package.json
 vite.config.js
 README.md
 sensitive.config.js
+.firebase
+.firebaserc
+firebase.json

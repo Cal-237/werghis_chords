@@ -1,8 +1,7 @@
-import { AppBar, Box, Button, Typography, Toolbar, IconButton } from "@mui/material";
-import { Home, Home as HomeIcon } from "@mui/icons-material";
-import React from "react";
+import { AppBar, Box, Typography, Toolbar, IconButton } from "@mui/material";
+import { Home as HomeIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-
+import LoginButton from "./LoginButton";
 
 export default function MyAppBar() {
 
@@ -27,7 +26,7 @@ export default function MyAppBar() {
                   <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Werghis Chords
                   </Typography>
-                  <Button color="inherit">Login</Button>
+                  <LoginButton/>
               </Toolbar>
           </AppBar>
       </Box>
