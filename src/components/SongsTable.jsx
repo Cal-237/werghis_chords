@@ -12,7 +12,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
-export default function SongsTable({ songs }) {
+export default function SongsTable({ authorized, songs }) {
 
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ export default function SongsTable({ songs }) {
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
-            <TableCell></TableCell>
+            {authorized ? <TableCell></TableCell> : <></>}
             <TableCell align="right">Date</TableCell>
           </TableRow>
         </TableHead>
@@ -52,13 +52,16 @@ export default function SongsTable({ songs }) {
               key={song.title}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell sx={{py: 1.25}} component="th" scope="row">
                 <Link component={RouterLink} to={`/songs/${song.id}`}>
                   {song.title}
                 </Link>
               </TableCell>
 
-              <TableCell sx={{minWidth: 60}}>
+              { // only show edit/delete if user is authorized
+                authorized ?
+                
+                <TableCell sx={{minWidth: 60}}>
                 <Tooltip title="Edit" disableInteractive>
                   <IconButton
                     onClick={() => {
@@ -81,7 +84,12 @@ export default function SongsTable({ songs }) {
                     <Delete fontSize="inherit"></Delete>
                   </IconButton>
                 </Tooltip>
-              </TableCell>
+                </TableCell>
+              
+                :
+
+                <></>
+              }
 
               <TableCell align="right">{song.date}</TableCell>
 

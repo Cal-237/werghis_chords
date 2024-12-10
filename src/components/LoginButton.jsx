@@ -1,31 +1,16 @@
 import { Button, IconButton, Menu, MenuItem } from "@mui/material"
-import { AccountCircle as AccountIcon } from "@mui/icons-material";
+import { AccountCircle as AccountIcon, CheckCircleOutline as CheckIcon } from "@mui/icons-material";
 
 import { auth } from '../firebase';
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useState } from "react";
 
 import { signOut } from "firebase/auth";
 
-export default function LoginButton() {
+export default function LoginButton({ authorized }) {
 
     // stuff to set up authentication
-    const [user, setUser] = useState(null);
     const provider = new GoogleAuthProvider();
-
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            console.log("hi");
-            if (user) {
-              // user got logged in
-              setUser(user)
-            } else {
-              // User got signed out
-              setUser(null)
-            }
-        });
-    }, [])
-
 
     // stuff to set up Menu
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,10 +21,9 @@ export default function LoginButton() {
     const handleClose = () => {
       setAnchorEl(null);
     };
-  
-    
 
-    return ( user ?
+
+    return ( auth.currentUser ?
 
     (<>
     <IconButton 
@@ -56,11 +40,15 @@ export default function LoginButton() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem disabled>User: {user.email}</MenuItem>
-        <MenuItem disabled divider>Authorized</MenuItem>
+        <MenuItem disabled>User: {auth.currentUser.email}</MenuItem>
+        { authorized ?
+          <MenuItem disabled divider>Authorized<CheckIcon color="success" sx={{ml: 1}}/></MenuItem>
+          :
+          <MenuItem disabled divider>Not Authorized</MenuItem>
+        }
         <MenuItem onClick={() => {
             signOut(auth).then(() => {
-                // Sign-out successful.
+                // Already handled in onAuthStateChanged()
             }).catch((error) => {
                 console.error(error);
             });

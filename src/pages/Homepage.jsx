@@ -8,7 +8,7 @@ import { Add as AddIcon } from "@mui/icons-material"
 import { useNavigate } from "react-router-dom";
 
 
-export default function Homepage() {
+export default function Homepage({ authorized }) {
 
     // use a state hook to store the songs once they are loaded and then display them
     const [songs, setSongs] = useState([]);
@@ -48,18 +48,28 @@ export default function Homepage() {
 
     return (
         <>
-          <SongsTable songs={songs} />
-          <Tooltip title="New Song">
-            <Fab sx={{position: "fixed", right: 30, bottom: 30}}
-              color="primary"
-              aria-label="new"
-              onClick={() => {
-                navigate("/newSong");
-              }}
-            >
-              <AddIcon />
-            </Fab>
-          </Tooltip>
+          <SongsTable authorized={authorized} songs={songs} />
+
+          { // only show new song button if user is authorized
+            authorized ? 
+
+            (<Tooltip title="New Song">
+              <Fab sx={{position: "fixed", right: 30, bottom: 30}}
+                color="primary"
+                aria-label="new"
+                onClick={() => {
+                  navigate("/newSong");
+                }}
+              >
+                <AddIcon />
+              </Fab>
+            </Tooltip>)
+
+            :
+
+            <></>
+
+          }
         </>
       );
 }

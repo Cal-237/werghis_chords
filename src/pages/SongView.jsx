@@ -10,7 +10,7 @@ import { db } from "../firebase";
 import ViewControls from "../components/ViewControls";
 
 
-export default function SongView() {
+export default function SongView({ authorized }) {
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -86,9 +86,12 @@ export default function SongView() {
             <Box justifyContent={"space-between"} display={"flex"} alignItems={"center"}>
                 <Box display={"flex"}>
                 <Typography mr={1} variant="h5" align="left">
-                    {//@ts-ignore
-                    songData.title}
+                    {songData.title}
                 </Typography>
+
+                { //only show edit button if authorized user
+                  authorized ?
+                
                 <Tooltip title="Edit">
                     <IconButton
                       onClick={() => {
@@ -99,6 +102,9 @@ export default function SongView() {
                       <Edit fontSize='inherit'></Edit>
                     </IconButton>
                 </Tooltip>
+
+                : <></> }
+
                 <Tooltip title="Print">
                     <IconButton
                       onClick={() => {
