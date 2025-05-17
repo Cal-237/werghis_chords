@@ -17,7 +17,7 @@ export default function SongView({ authorized }) {
 
     const navigate = useNavigate();
 
-    const [params, setParams] = useState({key: "C", flats: false, twoCols: false});
+    const [params, setParams] = useState({key: "C", flats: false, displayType: "lyrics"});
 
     const [songData, setSongData] = useState({});
 
@@ -61,10 +61,10 @@ export default function SongView({ authorized }) {
                     key: (newKey ? newKey : prevParams.key)
                 };
             });
-        } else if (e.target.id == "two-cols") {
+        } else if (e.target.id.startsWith("display-type")) {
             setParams(prevParams => ({
                 ...prevParams,
-                twoCols: e.target.checked
+                displayType: e.target.value
             }))
         }
     };
@@ -79,7 +79,7 @@ export default function SongView({ authorized }) {
             maxWidth={800}
             sx={{ bgcolor: "background.default" }}
         >
-            <Box justifyContent={"space-between"} display={"flex"} alignItems={"center"} flexWrap={"wrap"} rowGap={1}>
+            <Box display={"flex"} flexDirection={"column"} alignItems={"left"} rowGap={2}>
                 <Box display={"flex"}>
                 <Typography mr={1} variant="h5" align="left">
                     {songData.title}
@@ -131,7 +131,9 @@ export default function SongView({ authorized }) {
                             >
                                 {line.segments.map((segment) => (
                                     <Box display={"inline-block"}>
-                                        <Chord useFlats={params.flats} chord={segment.chord} songKey={params.key}></Chord>
+                                        {params.displayType == "chords" && 
+                                            <Chord useFlats={params.flats} chord={segment.chord} songKey={params.key}></Chord>
+                                        }
                                         <Typography variant="body1" align="left">
                                             {segment.text.replace(/\s/g, "\u00A0") }
                                         </Typography>
