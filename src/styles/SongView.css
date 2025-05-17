@@ -1,0 +1,15 @@
+#song-display {
+    column-count: 1;
+}
+
+.stanza {
+    page-break-inside: avoid; /* For Firefox. */
+    -webkit-column-break-inside: avoid; /* For Chrome & friends. */
+    break-inside: avoid; /* For standard browsers like IE. :-) */
+}
+
+@media (min-width: 850px) {
+    #song-display {
+        column-count: 2;
+    }
+}

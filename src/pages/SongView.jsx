@@ -9,6 +9,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import ViewControls from "../components/ViewControls";
 
+import "../styles/SongView.css";
+
 
 export default function SongView({ authorized }) {
     const { id } = useParams();
@@ -18,12 +20,6 @@ export default function SongView({ authorized }) {
     const [params, setParams] = useState({key: "C", flats: false, twoCols: false});
 
     const [songData, setSongData] = useState({});
-
-    useEffect(() => {
-        const box = document.getElementById("song-display");
-        box.style.maxHeight = "none";
-        box.style.maxHeight = `${(box.offsetHeight / 2) + 200}px`;
-    }, [songData])
 
     useEffect(() => {
         async function pullSongData() {
@@ -79,11 +75,11 @@ export default function SongView({ authorized }) {
         <Box height={25}></Box>
 
         <Box
-            marginBottom={10}
-            maxWidth={700}
+            paddingBottom={5}
+            maxWidth={800}
             sx={{ bgcolor: "background.default" }}
         >
-            <Box justifyContent={"space-between"} display={"flex"} alignItems={"center"}>
+            <Box justifyContent={"space-between"} display={"flex"} alignItems={"center"} flexWrap={"wrap"} rowGap={1}>
                 <Box display={"flex"}>
                 <Typography mr={1} variant="h5" align="left">
                     {songData.title}
@@ -121,12 +117,12 @@ export default function SongView({ authorized }) {
             </Box>
 
         
-            <Box id="song-display" display={"flex"} columnGap={5} flexWrap={"wrap"} flexDirection={"column"}>
+            <Box mt={2} id="song-display">
             
                 {songData.stanzas ? 
 
                 songData.stanzas.map((stanza) => (
-                    <Box>
+                    <Box className="stanza">
                         <Typography mt={2} variant="h6" align="left">{stanza.name}</Typography>
                         {stanza.lines.map((line) => (
                             <Box
